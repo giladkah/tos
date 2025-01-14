@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gilad - Sign up or sign in</title>
+        <title>Sign up or sign in</title>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -109,6 +109,20 @@
 
             .buttons #cancel:before {
                 content: url(https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/left-arrow.svg);
+            }
+            .tos-checkbox {
+                margin: 20px 0;
+                text-align: left;
+            }
+            
+            .tos-checkbox input[type="checkbox"] {
+                margin-right: 10px;
+            }
+            
+            input[type="email"]:disabled,
+            input[type="password"]:disabled {
+                background-color: #f5f5f5 !important;
+                cursor: not-allowed;
             }
         </style>
         <style id="idpselector">
