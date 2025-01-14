@@ -110,53 +110,6 @@
             .buttons #cancel:before {
                 content: url(https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/left-arrow.svg);
             }
-
-            .tos-container {
-                margin: 10px 0;
-                text-align: left;
-            }
-            .tos-checkbox {
-                margin-right: 5px;
-            }
-            .tos-label {
-                font-size: 14px;
-                color: #666;
-            }
-            .tos-link {
-                color: #0067b8;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .tos-modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 1000;
-            }
-            .tos-modal-content {
-                position: relative;
-                background: #fff;
-                margin: 10% auto;
-                padding: 20px;
-                width: 90%;
-                max-width: 500px;
-                max-height: 70vh;
-                overflow-y: auto;
-                border-radius: 2px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            }
-            .tos-modal-close {
-                position: absolute;
-                right: 20px;
-                top: 10px;
-                font-size: 24px;
-                cursor: pointer;
-                color: #666;
-            }            
         </style>
         <style id="idpselector">
             #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #SignUpWithLogonNameExchange {
@@ -1457,70 +1410,11 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <img class="companyLogo" data-tenant-branding-logo="true" src="https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/logo.svg" alt="Company Logo">
-                            <div id="api" role="main">
-                            <div class="tos-container">
-                                <input type="checkbox" id="tosCheckbox" class="tos-checkbox">
-                                <label for="tosCheckbox" class="tos-label">
-                                    I agree to the <span class="tos-link" onclick="showTosModal()">Terms of Service</span>
-                                </label>
-                            </div>
-                            </div>
+                            <div id="api" role="main"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="tosModal" class="tos-modal">
-            <div class="tos-modal-content">
-                <span class="tos-modal-close" onclick="hideTosModal()">&times;</span>
-                <h2>Terms of Service</h2>
-                <div class="tos-content">
-                    <h3>1. Acceptance of Terms</h3>
-                    <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
-                    
-                    <h3>2. Use License</h3>
-                    <p>Permission is granted to temporarily access the service for personal, non-commercial transitory viewing only.</p>
-                    
-                    <h3>3. Disclaimer</h3>
-                    <p>The materials on this service are provided on an 'as is' basis.</p>
-                    
-                    <h3>4. Limitations</h3>
-                    <p>In no event shall we or our suppliers be liable for any damages arising out of the use or inability to use our service.</p>
-                </div>
-            </div>
-        </div>        
-        <script>
-            (function() {
-                var tosCheckbox = document.getElementById('tosCheckbox');
-                if (tosCheckbox) {
-                    tosCheckbox.addEventListener('change', function() {
-                        var buttons = document.querySelectorAll('.buttons button');
-                        buttons.forEach(function(button) {
-                            button.disabled = !tosCheckbox.checked;
-                        });
-                    });
-                }
-        
-                function showTosModal() {
-                    var modal = document.getElementById('tosModal');
-                    if (modal) modal.style.display = 'block';
-                }
-        
-                function hideTosModal() {
-                    var modal = document.getElementById('tosModal');
-                    if (modal) modal.style.display = 'none';
-                }
-        
-                window.showTosModal = showTosModal;
-                window.hideTosModal = hideTosModal;
-        
-                window.onclick = function(event) {
-                    var modal = document.getElementById('tosModal');
-                    if (event.target == modal) {
-                        hideTosModal();
-                    }
-                };
-            })();
-        </script>
     </body>
 </html>
