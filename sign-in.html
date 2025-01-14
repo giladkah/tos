@@ -1447,5 +1447,25 @@
                 </div>
             </div>
         </div>
+        <script>
+        function toggleInputs() {
+            var checkbox = document.getElementById('tosCheckbox');
+            var inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+            var nextButton = document.querySelector('button#next');
+            
+            inputs.forEach(function(input) {
+                input.disabled = !checkbox.checked;
+            });
+            
+            if (nextButton) {
+                nextButton.disabled = !checkbox.checked;
+            }
+        }
+        
+        // Call once on page load to set initial state
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleInputs();
+        });
+        </script>        
     </body>
 </html>
