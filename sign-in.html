@@ -110,44 +110,71 @@
             .buttons #cancel:before {
                 content: url(https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/left-arrow.svg);
             }
-        <style>
-        .tos-checkbox {
-            margin: 15px 0;
-            text-align: left;
-            clear: both;
-            padding: 0;
-        }
-        
-        .tos-checkbox input[type="checkbox"] {
-            margin-right: 10px;
-            width: auto !important;
-            height: auto !important;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        
-        .tos-checkbox label {
-            display: inline-block !important;
-            float: none !important;
-            font-weight: normal;
-        }
-        
-        #next:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-        
-        input[type="text"]:disabled,
-        input[type="password"]:disabled {
-            background-color: #f5f5f5 !important;
-            cursor: not-allowed;
-        }
+            .tos-container {
+                margin: 20px 0;
+                text-align: left;
+            }
+            
+            .tos-checkbox {
+                margin-right: 10px;
+            }
+            
+            .tos-label {
+                display: inline-block;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .tos-link {
+                color: #0067b8;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            
+            .tos-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1000;
+            }
+            
+            .tos-modal-content {
+                position: relative;
+                background: #fff;
+                margin: 10% auto;
+                padding: 20px;
+                width: 70%;
+                max-width: 700px;
+                max-height: 70vh;
+                overflow-y: auto;
+                border-radius: 4px;
+            }
+            
+            .tos-modal-close {
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            
+            /* Disable sign in button when TOS not accepted */
+            .buttons button[disabled] {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
         </style>
     </head>
     <body>
+        <!-- Preserve existing background branding -->
         <div id="background_branding_container" data-tenant-branding-background-color="true">
             <img data-tenant-branding-background="true" src="https://sojosearchappdev.b2clogin.com/static/tenant/templates/backgrounds/4-2.png" alt="Background Image"/>
         </div>
+        
         <div class="container unified_container" role="presentation">
             <div class="row">
                 <div class="col-lg-6">
@@ -155,13 +182,13 @@
                         <div class="panel-body">
                             <img class="companyLogo" data-tenant-branding-logo="true" src="https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/logo.svg" alt="Company Logo">
                             <div id="api" role="main">
-                                <!-- The API content will be injected here -->
-                            </div>
-                            <div class="tos-checkbox">
-                                <label>
-                                    <input type="checkbox" id="tosCheckbox" onchange="toggleInputs()">
-                                    I accept the Terms of Service
-                                </label>
+                                <!-- Add TOS checkbox before the sign in button -->
+                                <div class="tos-container">
+                                    <input type="checkbox" id="tosCheckbox" class="tos-checkbox">
+                                    <label for="tosCheckbox" class="tos-label">
+                                        I agree to the <span class="tos-link" onclick="showTosModal()">Terms of Service</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -169,31 +196,63 @@
             </div>
         </div>
 
+        <!-- Add TOS Modal -->
+        <div id="tosModal" class="tos-modal">
+            <div class="tos-modal-content">
+                <span class="tos-modal-close" onclick="hideTosModal()">&times;</span>
+                <h2>Terms of Service</h2>
+                <div class="tos-content">
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                    
+                    <h3>2. Use License</h3>
+                    <p>Permission is granted to temporarily access the service for personal, non-commercial transitory viewing only.</p>
+                    
+                    <h3>3. Disclaimer</h3>
+                    <p>The materials on this service are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+                    
+                    <h3>4. Limitations</h3>
+                    <p>In no event shall we or our suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our service.</p>
+                </div>
+            </div>
+        </div>
+
         <script>
-        function toggleInputs() {
-            var checkbox = document.getElementById('tosCheckbox');
-            var inputs = document.querySelectorAll('#api input[type="text"], #api input[type="password"]');
-            var nextButton = document.querySelector('#api button#next');
-            
-            inputs.forEach(function(input) {
-                input.disabled = !checkbox.checked;
-            });
-            
-            if (nextButton) {
-                nextButton.disabled = !checkbox.checked;
-            }
-        }
-        
-        // Initialize the toggle state when the API content is loaded
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.addedNodes.length) {
-                    toggleInputs();
+            // Add JavaScript for TOS functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                // Find the sign in button and disable it initially
+                const signInButton = document.querySelector('.buttons button');
+                if (signInButton) {
+                    signInButton.disabled = true;
+                }
+
+                // Add checkbox listener
+                const tosCheckbox = document.getElementById('tosCheckbox');
+                if (tosCheckbox) {
+                    tosCheckbox.addEventListener('change', function() {
+                        if (signInButton) {
+                            signInButton.disabled = !this.checked;
+                        }
+                    });
                 }
             });
-        });
 
-        observer.observe(document.getElementById('api'), { childList: true, subtree: true });
+            // Modal functions
+            function showTosModal() {
+                document.getElementById('tosModal').style.display = 'block';
+            }
+
+            function hideTosModal() {
+                document.getElementById('tosModal').style.display = 'none';
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('tosModal');
+                if (event.target == modal) {
+                    hideTosModal();
+                }
+            }
         </script>
     </body>
 </html>
