@@ -1490,36 +1490,37 @@
             </div>
         </div>        
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const signInButton = document.querySelector('.buttons button');
-                if (signInButton) {
-                    signInButton.disabled = true;
-                }
-        
-                const tosCheckbox = document.getElementById('tosCheckbox');
+            (function() {
+                var tosCheckbox = document.getElementById('tosCheckbox');
                 if (tosCheckbox) {
                     tosCheckbox.addEventListener('change', function() {
-                        if (signInButton) {
-                            signInButton.disabled = !this.checked;
-                        }
+                        var buttons = document.querySelectorAll('.buttons button');
+                        buttons.forEach(function(button) {
+                            button.disabled = !tosCheckbox.checked;
+                        });
                     });
                 }
-            });
         
-            function showTosModal() {
-                document.getElementById('tosModal').style.display = 'block';
-            }
-        
-            function hideTosModal() {
-                document.getElementById('tosModal').style.display = 'none';
-            }
-        
-            window.onclick = function(event) {
-                const modal = document.getElementById('tosModal');
-                if (event.target == modal) {
-                    hideTosModal();
+                function showTosModal() {
+                    var modal = document.getElementById('tosModal');
+                    if (modal) modal.style.display = 'block';
                 }
-            }
-        </script>        
+        
+                function hideTosModal() {
+                    var modal = document.getElementById('tosModal');
+                    if (modal) modal.style.display = 'none';
+                }
+        
+                window.showTosModal = showTosModal;
+                window.hideTosModal = hideTosModal;
+        
+                window.onclick = function(event) {
+                    var modal = document.getElementById('tosModal');
+                    if (event.target == modal) {
+                        hideTosModal();
+                    }
+                };
+            })();
+        </script>
     </body>
 </html>
