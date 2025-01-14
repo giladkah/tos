@@ -110,6 +110,37 @@
             .buttons #cancel:before {
                 content: url(https://sojosearchappdev.b2clogin.com/static/tenant/templates/images/left-arrow.svg);
             }
+            .tos-checkbox {
+                margin: 15px 0;
+                text-align: left;
+                clear: both;
+                padding: 0;
+            }
+            
+            .tos-checkbox input[type="checkbox"] {
+                margin-right: 10px;
+                width: auto !important;
+                height: auto !important;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            
+            .tos-checkbox label {
+                display: inline-block !important;
+                float: none !important;
+                font-weight: normal;
+            }
+            
+            #next:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+            
+            input[type="text"]:disabled,
+            input[type="password"]:disabled {
+                background-color: #f5f5f5 !important;
+                cursor: not-allowed;
+            }            
         </style>
         <style id="idpselector">
             #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #SignUpWithLogonNameExchange {
